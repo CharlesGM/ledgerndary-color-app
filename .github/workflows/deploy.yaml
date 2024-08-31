@@ -37,8 +37,22 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          # tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
-          tags: gachango/web-colour-app:${{ env.PAGE_COLOUR }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
+          # tags: gachango/web-colour-app:${{ env.PAGE_COLOUR }}
+
+
+
+      # - name: Update tag in test-alasco repo
+      #   run: |
+      #     git clone https://github.com/CharlesGM/test-alasco.git
+      #     cd test-alasco
+      #     sed -i "s/^image_tag = \".*\"/image_tag = \"${{ env.PAGE_COLOUR }}\"/" alasco/terraform.tfvars
+      #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      #     git config --global user.name "GitHub Actions"
+      #     git add alasco/terraform.tfvars
+      #     git commit -m "Update image_tag to ${{ env.PAGE_COLOUR }}"
+      #     git push https://github.com/CharlesGM/test-alasco.git main
+
 
       - name: Logout from Docker Hub
         run: docker logout
