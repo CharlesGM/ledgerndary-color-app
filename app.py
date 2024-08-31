@@ -1,18 +1,18 @@
 from flask import Flask, render_template_string
 import os
+import sys
 
 app = Flask(__name__)
 
-# List of valid colors for validation
 VALID_COLORS = {'white', 'black', 'red', 'green', 'blue', 'yellow', 'cyan', 'magenta'}
 
 @app.route('/')
 def home():
-    # Get the color from the environment variable, default to "white" if not set
     color = os.getenv('PAGE_COLOUR', 'white')
+    
     if color not in VALID_COLORS:
-        color = 'white'
-        
+        sys.exit(f"Invalid color: {color}. Must be one of: {', '.join(VALID_COLORS)}")
+
     html = f"""
     <html>
         <head><title>Web Page Colour</title></head>
