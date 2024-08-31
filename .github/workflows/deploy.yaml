@@ -45,7 +45,7 @@ jobs:
         run: |
           git clone https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git
           cd test-alasco
-          sed -i "s|^container_image *= *\".*\"|container_image = \"ghost:${{ env.PAGE_COLOUR }}\"|" alasco/terraform.tfvars
+          sed -i "s|^container_image *= *\".*\"|container_image = \"gachango/web-colour-app:${{ env.PAGE_COLOUR }}\"|" alasco/terraform.tfvars
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
           git add alasco/terraform.tfvars
