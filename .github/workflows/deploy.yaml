@@ -28,7 +28,7 @@ jobs:
 
       - name: List directory contents
         run: |
-          ls -R
+          ls -alh *
 
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
