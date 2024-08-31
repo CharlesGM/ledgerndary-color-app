@@ -3,15 +3,21 @@ import os
 
 app = Flask(__name__)
 
+# List of valid colors for validation
+VALID_COLORS = {'white', 'black', 'red', 'green', 'blue', 'yellow', 'cyan', 'magenta'}
+
 @app.route('/')
 def home():
-    # Get the colour from the environment variable, default to "white" if not set
-    colour = os.getenv('PAGE_COLOUR', 'white')
+    # Get the color from the environment variable, default to "white" if not set
+    color = os.getenv('PAGE_COLOUR', 'white')
+    if color not in VALID_COLORS:
+        color = 'white'
+        
     html = f"""
     <html>
         <head><title>Web Page Colour</title></head>
-        <body style="background-color: {colour};">
-            <h1>The background colour of this page is {colour}!</h1>
+        <body style="background-color: {color};">
+            <h1>The background colour of this page is {color}!</h1>
         </body>
     </html>
     """
