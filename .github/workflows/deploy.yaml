@@ -24,7 +24,7 @@ jobs:
 
       - name: Validate PAGE_COLOUR
         run: |
-          python tests/validate_color.py
+          python tests/test_app.py
 
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
