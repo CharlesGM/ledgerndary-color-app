@@ -19,7 +19,7 @@ jobs:
       - name: Extract PAGE_COLOUR from Dockerfile
         id: extract-color
         run: |
-          PAGE_COLOUR=$(grep -oP '(?<=ENV PAGE_COLOUR=).*' Dockerfile)
+          PAGE_COLOUR=$(grep 'ENV PAGE_COLOUR=' Dockerfile | sed 's/ENV PAGE_COLOUR=//')
           echo "PAGE_COLOUR=${PAGE_COLOUR}" >> $GITHUB_ENV
 
       - name: Login to Docker Hub
