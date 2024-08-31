@@ -6,7 +6,6 @@ on:
       - main
 
 jobs:
-
   test:
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +21,9 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install pytest
+
+      - name: Set PYTHONPATH
+        run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
       - name: Run unit tests
         run: |
