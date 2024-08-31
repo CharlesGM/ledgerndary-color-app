@@ -22,12 +22,17 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
+      - name: Validate PAGE_COLOUR
+        run: |
+          python tests/validate_color.py
+
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
-      # - name: Run unit tests
-      #   run: |
-      #     pytest tests/
+      - name: Run unit tests
+        run: |
+          pytest tests/
+
 
   build-and-push:
     needs: test
