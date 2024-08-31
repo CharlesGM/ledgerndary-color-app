@@ -1,4 +1,4 @@
-name: Build, Test, and Deploy Docker Image
+name: Build and Push Docker Image
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - main
 
 jobs:
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -29,6 +30,7 @@ jobs:
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -57,102 +59,22 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: gachango/web-colour-app:${{ env.PAGE_COLOUR }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
 
-      - name: Update container_image in test-alasco repo
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          git clone https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git
-          cd test-alasco
-          sed -i "s|^container_image *= *\".*\"|container_image = \"ghost:${{ env.PAGE_COLOUR }}\"|" alasco/terraform.tfvars
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "GitHub Actions"
-          git add alasco/terraform.tfvars
-          git commit -m "Update container_image to ghost:${{ env.PAGE_COLOUR }}"
-          git push https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git main
-
+      # - name: Clone the test-alasco repo
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} # Ensure this is your personal access token secret
+      #   run: |
+      #     git clone https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git
+      #     cd test-alasco
+      #     sed -i "s|^container_image *= *\".*\"|container_image = \"gachango/web-colour-app:${{ env.PAGE_COLOUR }}\"|" alasco/terraform.tfvars
+      #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      #     git config --global user.name "GitHub Actions"
+      #     git add alasco/terraform.tfvars
+      #     git commit -m "Update container_image to ghost:${{ env.PAGE_COLOUR }}"
+      #     git push https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git main
+  
+  
       - name: Logout from Docker Hub
         run: docker logout
-
-
-# name: Build and Push Docker Image
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-
-#   test:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-
-#       - name: Set up Python
-#         uses: actions/setup-python@v4
-#         with:
-#           python-version: '3.9'
-
-#       - name: Install dependencies
-#         run: |
-#           pip install -r requirements.txt
-#           pip install pytest
-
-#       - name: Run unit tests
-#         run: |
-#           pytest tests/
-
-#   build-and-push:
-#     needs: test
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v3
-
-#       - name: Set up Docker Buildx
-#         uses: docker/setup-buildx-action@v2
-
-#       - name: Extract PAGE_COLOUR from Dockerfile
-#         id: extract-color
-#         run: |
-#           PAGE_COLOUR=$(grep 'ENV PAGE_COLOUR=' Dockerfile | sed 's/ENV PAGE_COLOUR=//')
-#           echo "PAGE_COLOUR=${PAGE_COLOUR}" >> $GITHUB_ENV
-
-#       - name: Login to Docker Hub
-#         uses: docker/login-action@v2
-#         with:
-#           username: ${{ secrets.DOCKERHUB_USERNAME }}
-#           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-#       - name: Set up QEMU (for multi-platform builds)
-#         uses: docker/setup-qemu-action@v2
-
-#       - name: Build and push Docker image
-#         uses: docker/build-push-action@v5
-#         with:
-#           context: .
-#           file: ./Dockerfile
-#           push: true
-#           tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
-
-#       # - name: Clone the test-alasco repo
-#       #   env:
-#       #     GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} # Ensure this is your personal access token secret
-#       #   run: |
-#       #     git clone https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git
-#       #     cd test-alasco
-#       #     sed -i "s|^container_image *= *\".*\"|container_image = \"gachango/web-colour-app:${{ env.PAGE_COLOUR }}\"|" alasco/terraform.tfvars
-#       #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
-#       #     git config --global user.name "GitHub Actions"
-#       #     git add alasco/terraform.tfvars
-#       #     git commit -m "Update container_image to ghost:${{ env.PAGE_COLOUR }}"
-#       #     git push https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git main
-  
-  
-#       - name: Logout from Docker Hub
-#         run: docker logout
 
