@@ -28,14 +28,18 @@ jobs:
 
       - name: List directory contents
         run: |
-          ls -alh *
+          ls -alh
 
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
+      - name: Validate PAGE_COLOUR
+        run: |
+          python tests/validate_color.py
+
       - name: Run unit tests
         run: |
-          pytest tests/test_app.py
+          pytest tests/ --maxfail=1 --disable-warnings -v
 
   build-and-push:
     needs: test
