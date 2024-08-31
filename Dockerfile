@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Set environment variable for the page color
-ENV PAGE_COLOUR=mauve
+ENV PAGE_COLOUR=green
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -17,10 +17,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install --no-cache-dir pytest
 
 # Copy the validation script
-COPY tests/validate_color.py .
+COPY tests/test_app.py .
 
 # Validate the PAGE_COLOUR
-RUN python validate_color.py
+RUN python test_app.py
 
 # Set the PYTHONPATH to include the working directory
 ENV PYTHONPATH=/usr/src/app
