@@ -35,7 +35,7 @@ jobs:
 
       - name: Validate PAGE_COLOUR
         run: |
-          python tests/validate_color.py
+          python tests/test_app.py
 
       - name: Run unit tests
         run: |
