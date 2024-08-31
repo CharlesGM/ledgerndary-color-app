@@ -37,7 +37,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
+          # tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
+          tags: gachango/web-colour-app:${{ env.PAGE_COLOUR }}
 
       - name: Logout from Docker Hub
         run: docker logout
