@@ -29,7 +29,19 @@ def test_home_page_invalid_color(client):
     
     response = client.get('/')
     
-    # Check that the response uses the default color (white) for invalid colors
+    # Extract the color from the response HTML
+    html_content = response.data.decode()
+    start_idx = html_content.find('background-color: ') + len('background-color: ')
+    end_idx = html_content.find(';', start_idx)
+    
+    # If no valid color is found, set it to an empty string
+    color_in_response = html_content[start_idx:end_idx] if start_idx != -1 and end_idx != -1 else ''
+    
+    # Validate the color
+    if color_in_response not in VALID_COLORS:
+        pytest.fail(f"Invalid color detected: {color_in_response}. Expected one of: {', '.join(VALID_COLORS)}")
+    
+    # Ensure the invalid color does not appear in the response
     assert response.status_code == 200
-    assert b'background-color: white;' in response.data
-    assert b'The background colour of this page is white!' in response.data
+    assert f'background-color: {invalid_color};' not in html_content
+    assert f'The background colour of this page is {invalid_color}!' not in html_content
