@@ -3,9 +3,9 @@
 This is a simple Python Flask web application that displays a web page with a background color defined by an environment variable. The app includes a validation mechanism to ensure the color is one of the predefined valid colors.
 
 ## Features
-Display a web page with a background color set by the **PAGE_COLOUR** environment variable in the Dockerfile. \
-Validate the PAGE_COLOUR environment variable to ensure it is one of the allowed colors. \
-Fail the CI if an invalid color is provided.
+- Display a web page with a background color set by the **PAGE_COLOUR** environment variable in the Dockerfile.
+- Validate the PAGE_COLOUR environment variable to ensure it is one of the allowed colors.
+- Fail the CI if an invalid color is provided.
 
 ## Valid Colors
 The following colors are considered valid:
