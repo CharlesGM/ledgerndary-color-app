@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Set environment variable for the page color
-ENV PAGE_COLOUR=mauve
+ENV PAGE_COLOUR=blue
 
 # Set the working directory
 WORKDIR /usr/src/app
