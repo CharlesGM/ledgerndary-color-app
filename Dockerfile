@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Set environment variable for the page color
-ENV PAGE_COLOUR=red
+ENV PAGE_COLOUR=blue
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -16,8 +16,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Set the PYTHONPATH to include the working directory
 ENV PYTHONPATH=/usr/src/app
 
-# Expose port 80
-EXPOSE 80
+# Expose port 8080
+EXPOSE 8080
 
 # Run the application
 CMD ["python", "app.py"]

@@ -48,7 +48,6 @@ jobs:
   build-and-push:
     needs: unit-test
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push'
 
     steps:
       - name: Checkout code
