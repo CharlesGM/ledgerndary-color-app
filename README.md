@@ -83,7 +83,7 @@ The project includes a GitHub Actions workflow (workflow.yml) that automates the
     - Validates if the extracted PAGE_COLOUR is a valid color. The workflow fails if an invalid color is found.
  5. Build and Push Docker Image:
     - Builds the Docker image using the Dockerfile.
-    - Tags and pushes the Docker image to Docker Hub.
+    - Tags the docker image with the PAGE_COLOR variable and pushes the Docker image to Docker Hub.
 6. Update Remote Repository:
     - Commits changes (if any) and pushes them to the remote repository.
 
