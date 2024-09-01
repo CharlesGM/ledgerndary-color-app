@@ -50,7 +50,7 @@ jobs:
   build-and-push:
     needs: unit-test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'  # Only run on push events, not on pull requests
+    if: github.event_name == 'push'
 
     steps:
       - name: Checkout code
