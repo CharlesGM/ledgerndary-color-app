@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   unit-test:
@@ -25,19 +28,15 @@ jobs:
       - name: Extract PAGE_COLOUR from Dockerfile
         id: extract_page_colour
         run: |
-          # Extract the value of PAGE_COLOUR from Dockerfile
           PAGE_COLOUR=$(grep 'ENV PAGE_COLOUR=' Dockerfile | cut -d '=' -f 2)
           echo "PAGE_COLOUR=${PAGE_COLOUR}" >> $GITHUB_ENV
 
       - name: Validate PAGE_COLOUR
         run: |
-          # Define the set of valid colors
           VALID_COLORS="white black red green blue yellow cyan magenta"
-          
-          # Check if PAGE_COLOUR is in the set of valid colors
           if [[ ! " ${VALID_COLORS[@]} " =~ " ${PAGE_COLOUR} " ]]; then
             echo "Invalid color: ${PAGE_COLOUR}. Must be one of: ${VALID_COLORS}"
-            exit 1  # Exit with a non-zero status code to fail the workflow
+            exit 1
           else
             echo "PAGE_COLOUR is valid: ${PAGE_COLOUR}"
           fi
@@ -51,6 +50,7 @@ jobs:
   build-and-push:
     needs: unit-test
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'  # Only run on push events, not on pull requests
 
     steps:
       - name: Checkout code
@@ -92,9 +92,8 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
           git add alasco/terraform.tfvars
-          git commit -m "Update container_image to ghost:${{ env.PAGE_COLOUR }}"
+          git commit -m "Update container_image to gachango/web-colour-app:${{ env.PAGE_COLOUR }}"
           git push https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git main
 
       - name: Logout from Docker Hub
         run: docker logout
-
