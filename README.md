@@ -23,12 +23,12 @@ The following colors are considered valid:
 ## Project Structure
 
     ├── .github/workflow.yml        # GitHub Actions workflow file
-    ├── Dockerfile          # Dockerfile for containerizing the app
-    ├── README.md           # Project README file
-    ├── app.py              # Main Flask application
-    ├── requirements.txt    # Python dependencies
+    ├── Dockerfile                  # Dockerfile for containerizing the app
+    ├── README.md                   # Project README file
+    ├── app.py                      # Main Flask application
+    ├── requirements.txt            # Python dependencies
     └── tests
-        └── test_app.py      # Unit test for validating PAGE_COLOUR
+        └── test_app.py             # Unit test for validating PAGE_COLOUR
 
 ## Getting Started
 ### Prerequisites
