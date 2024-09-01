@@ -45,8 +45,10 @@ Install the required Python packages using pip:
 ### Running the Application
 To run the Flask application locally:
 
-    export PAGE_COLOUR=blue  # Set the environment variable
-    python app.py
+- Set the environment variable/color in th e Dockerfile as it will also be used for tagging
+- Run:
+            
+        python app.py
 
 Visit http://127.0.0.1:8080 in your web browser to see the web page.
 
