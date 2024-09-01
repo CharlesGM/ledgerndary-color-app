@@ -1,15 +1,15 @@
+import unittest
 import os
-import sys
+from app import VALID_COLORS
 
-VALID_COLORS = {'white', 'black', 'red', 'green', 'blue', 'yellow', 'cyan', 'magenta'}
+class TestPageColor(unittest.TestCase):
+    
+    def test_page_color_valid(self):
+        # Load the PAGE_COLOUR from the environment variable
+        color = os.getenv('PAGE_COLOUR', 'white')
+        
+        # Check if the color is valid
+        self.assertIn(color, VALID_COLORS, f"Invalid color: {color}. Must be one of: {', '.join(VALID_COLORS)}")
 
-def validate_color():
-    color = os.getenv('PAGE_COLOUR', 'white')
-    if color not in VALID_COLORS:
-        print(f"Invalid color: {color}. Must be one of: {', '.join(VALID_COLORS)}")
-        sys.exit(1)
-    else:
-        print(f"Valid color: {color}")
-
-if __name__ == "__main__":
-    validate_color()
+if __name__ == '__main__':
+    unittest.main()

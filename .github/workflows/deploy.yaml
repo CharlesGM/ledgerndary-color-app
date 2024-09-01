@@ -17,25 +17,59 @@ jobs:
         with:
           python-version: '3.9'
 
+      # - name: Install dependencies
+      #   run: |
+      #     pip install -r requirements.txt
+      #     pip install pytest
+
+      # - name: List directory contents
+      #   run: |
+      #     ls -alh
+
+      # - name: Set PYTHONPATH
+      #   run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+
+      # - name: Validate PAGE_COLOUR
+      #   run: |
+      #     python tests/test_app.py
+
+      # - name: Run unit tests
+      #   run: |
+      #     pytest tests/
+
+
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
-          pip install pytest
+          python -m pip install --upgrade pip
+          pip install flask
 
-      - name: List directory contents
+      - name: Extract PAGE_COLOUR from Dockerfile
+        id: extract_page_colour
         run: |
-          ls -alh
-
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+          # Extract the value of PAGE_COLOUR from Dockerfile
+          PAGE_COLOUR=$(grep 'ENV PAGE_COLOUR=' Dockerfile | cut -d '=' -f 2)
+          echo "PAGE_COLOUR=${PAGE_COLOUR}" >> $GITHUB_ENV
 
       - name: Validate PAGE_COLOUR
         run: |
-          python tests/test_app.py
+          # Define the set of valid colors
+          VALID_COLORS="white black red green blue yellow cyan magenta"
+          
+          # Check if PAGE_COLOUR is in the set of valid colors
+          if [[ ! " ${VALID_COLORS[@]} " =~ " ${PAGE_COLOUR} " ]]; then
+            echo "Invalid color: ${PAGE_COLOUR}. Must be one of: ${VALID_COLORS}"
+            exit 1  # Exit with a non-zero status code to fail the workflow
+          else
+            echo "PAGE_COLOUR is valid: ${PAGE_COLOUR}"
+          fi
 
       - name: Run unit tests
         run: |
-          pytest tests/
+          python -m unittest discover -s . -p "test_app.py"
+        env:
+          PAGE_COLOUR: ${{ env.PAGE_COLOUR }}
+
+
 
   build-and-push:
     needs: test

@@ -1,6 +1,5 @@
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, abort
 import os
-import sys
 
 app = Flask(__name__)
 
@@ -11,7 +10,8 @@ def home():
     color = os.getenv('PAGE_COLOUR', 'white')
     
     if color not in VALID_COLORS:
-        sys.exit(f"Invalid color: {color}. Must be one of: {', '.join(VALID_COLORS)}")
+        # Return a 400 Bad Request error with a message
+        abort(400, description=f"Invalid color: {color}. Must be one of: {', '.join(VALID_COLORS)}")
 
     html = f"""
     <html>
