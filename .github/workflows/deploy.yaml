@@ -84,7 +84,7 @@ jobs:
 
       - name: Clone the test-alasco repo
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} # Ensure this is your personal access token secret
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git clone https://${GITHUB_TOKEN}@github.com/CharlesGM/test-alasco.git
           cd test-alasco
