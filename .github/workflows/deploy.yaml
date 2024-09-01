@@ -49,7 +49,7 @@ jobs:
           PAGE_COLOUR: ${{ env.PAGE_COLOUR }}
 
   build-and-push:
-    needs: test
+    needs: unit-test
     runs-on: ubuntu-latest
 
     steps:
