@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Set environment variable for the page color
-ENV PAGE_COLOUR=green
+ENV PAGE_COLOUR=mauve
 
 # Set the working directory
 WORKDIR /usr/src/app
@@ -15,9 +15,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Set the PYTHONPATH to include the working directory
 ENV PYTHONPATH=/usr/src/app
-
-# Run tests and ensure that failures cause the build to fail
-# RUN pytest tests/ || { echo 'Tests failed'; exit 1; }
 
 # Expose port 8080
 EXPOSE 8080
