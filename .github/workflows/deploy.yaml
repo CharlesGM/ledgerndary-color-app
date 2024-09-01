@@ -22,10 +22,6 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
-      - name: Validate PAGE_COLOUR
-        run: |
-          python tests/test_app.py
-
       - name: List directory contents
         run: |
           ls -alh
@@ -39,7 +35,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          pytest tests/ --maxfail=1 --disable-warnings -v
+          pytest tests/
 
   build-and-push:
     needs: test
