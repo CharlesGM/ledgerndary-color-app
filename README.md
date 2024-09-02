@@ -102,6 +102,7 @@ This ensures that invalid color configurations are caught early in the CI pipeli
 
     1. Dockerhub username: set as DOCKERHUB_USERNAME and referenced as ${{ secrets.DOCKERHUB_USERNAME }} in github actions.
     2. Dockerhub password: set as DOCKERHUB_TOKEN and referenced as${{ secrets.DOCKERHUB_TOKEN }} in github actions.
+    3. Github token: set as GITHUB_TOKENamd referenced as ${{ secrets.PAT_TOKEN }} in github actions.
 
 ## Contributing
 Feel free to submit issues or pull requests if you find any bugs or have suggestions for improvements.
