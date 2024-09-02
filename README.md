@@ -97,5 +97,11 @@ The workflow.yml file defines the CI pipeline for this project. Below is a summa
 
 This ensures that invalid color configurations are caught early in the CI pipeline, maintains the integrity of the application, and keeps the Docker image and remote repository updated.
 
+##### Github secrets
+- For github actions to push docker images to dockerhub, this repo needs two secrets to be set in Github:
+
+    1. Dockerhub username: set as DOCKERHUB_USERNAME and referenced as ${{ secrets.DOCKERHUB_USERNAME }} in github actions.
+    2. Dockerhub password: set as DOCKERHUB_TOKEN and referenced as${{ secrets.DOCKERHUB_TOKEN }} in github actions.
+
 ## Contributing
 Feel free to submit issues or pull requests if you find any bugs or have suggestions for improvements.
