@@ -85,7 +85,7 @@ jobs:
         run: |
           git clone https://${GITHUB_TOKEN}@github.com/CharlesGM/ledgerndary-color-app-terraform.git
           cd ledgerndary-color-app-terraform
-          sed -i "s|^container_image *= *\".*\"|container_image = \"gachango/web-colour-app:${{ env.PAGE_COLOUR }}\"|" ledgerndary-color-app-terraform/terraform.tfvars
+          sed -i "s|^container_image *= *\".*\"|container_image = \"gachango/web-colour-app:${{ env.PAGE_COLOUR }}\"|" ledgerndary/terraform.tfvars
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
           git add ledgerndary-color-app-terraform/terraform.tfvars
