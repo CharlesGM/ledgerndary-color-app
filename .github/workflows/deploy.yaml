@@ -88,7 +88,7 @@ jobs:
           sed -i "s|^container_image *= *\".*\"|container_image = \"gachango/web-colour-app:${{ env.PAGE_COLOUR }}\"|" ledgerndary/terraform.tfvars
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "GitHub Actions"
-          git add ledgerndary-color-app-terraform/terraform.tfvars
+          git add ledgerndary/terraform.tfvars
           git commit -m "Update container_image to gachango/web-colour-app:${{ env.PAGE_COLOUR }}"
           git push https://${GITHUB_TOKEN}@github.com/CharlesGM/ledgerndary-color-app-terraform.git main
 
