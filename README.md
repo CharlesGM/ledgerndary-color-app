@@ -2,6 +2,8 @@
 
 This is a simple Python Flask web application that displays a web page with a background color defined by an environment variable. The app includes a validation mechanism to ensure the color is one of the predefined valid colors.
 
+Github actions will run and update tfvars in https://github.com/CharlesGM/ledgerndary-color-app-terraform, ledgerndary directory
+
 ## Features
 - Display a web page with a background color set by the **PAGE_COLOUR** environment variable in the Dockerfile.
 - Validate the PAGE_COLOUR environment variable to ensure it is one of the allowed colors.
