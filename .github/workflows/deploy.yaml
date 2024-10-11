@@ -79,18 +79,38 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
 
-      - name: Clone the ledgerndary-color-app-terraform
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-        run: |
-          git clone https://${GITHUB_TOKEN}@github.com/CharlesGM/ledgerndary-color-app-terraform.git
-          cd ledgerndary-color-app-terraform
-          sed -i "s|^container_image *= *\".*\"|container_image = \"gachango/web-colour-app:${{ env.PAGE_COLOUR }}\"|" ledgerndary/terraform.tfvars
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "GitHub Actions"
-          git add ledgerndary/terraform.tfvars
-          git commit -m "Update container_image to gachango/web-colour-app:${{ env.PAGE_COLOUR }}"
-          git push https://${GITHUB_TOKEN}@github.com/CharlesGM/ledgerndary-color-app-terraform.git main
 
-      - name: Logout from Docker Hub
-        run: docker logout
+
+
+      - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Authenticate Docker to Google Cloud Artifact Registry
+      run: |
+        gcloud auth configure-docker REGION-docker.pkg.dev
+
+      - name: Build and push Docker image to Google Cloud Artifact Registry
+      run: |
+        docker build -t REGION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/GCP_REPOSITORY_NAME/web-colour-app:${{ env.PAGE_COLOUR }} .
+        docker push REGION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/GCP_REPOSITORY_NAME/web-colour-app:${{ env.PAGE_COLOUR }}
+
+
+
+      # - name: Clone the ledgerndary-color-app-terraform
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+      #   run: |
+      #     git clone https://${GITHUB_TOKEN}@github.com/CharlesGM/ledgerndary-color-app-terraform.git
+      #     cd ledgerndary-color-app-terraform
+      #     sed -i "s|^container_image *= *\".*\"|container_image = \"gachango/web-colour-app:${{ env.PAGE_COLOUR }}\"|" ledgerndary/terraform.tfvars
+      #     git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      #     git config --global user.name "GitHub Actions"
+      #     git add ledgerndary/terraform.tfvars
+      #     git commit -m "Update container_image to gachango/web-colour-app:${{ env.PAGE_COLOUR }}"
+      #     git push https://${GITHUB_TOKEN}@github.com/CharlesGM/ledgerndary-color-app-terraform.git main
+
+      # - name: Logout from Docker Hub
+      #   run: docker logout
