@@ -86,19 +86,19 @@ jobs:
 
 
       - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1
-      with:
-        service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Authenticate Docker to Google Cloud Artifact Registry
-      run: |
-        gcloud auth configure-docker REGION-docker.pkg.dev
+        run: |
+          gcloud auth configure-docker REGION-docker.pkg.dev
 
       - name: Build and push Docker image to Google Cloud Artifact Registry
-      run: |
-        docker build -t REGION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/GCP_REPOSITORY_NAME/web-colour-app:${{ env.PAGE_COLOUR }} .
-        docker push REGION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/GCP_REPOSITORY_NAME/web-colour-app:${{ env.PAGE_COLOUR }}
+        run: |
+          docker build -t REGION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/GCP_REPOSITORY_NAME/web-colour-app:${{ env.PAGE_COLOUR }} .
+          docker push REGION-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/GCP_REPOSITORY_NAME/web-colour-app:${{ env.PAGE_COLOUR }}
 
 
 
