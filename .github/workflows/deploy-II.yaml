@@ -2,9 +2,8 @@ name: Build and Push to Artifact Registry
 
 on:
   push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+    branches:
+      - main
 
 
 job:
