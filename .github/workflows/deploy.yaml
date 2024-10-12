@@ -1,12 +1,12 @@
 name: Build and Push Docker Image
 
-# on:
-#   push:
-#     branches:
-#       - main
-#   # pull_request:
-#   #   branches:
-#   #     - main
+on:
+  push:
+    branches:
+      - main
+  # pull_request:
+  #   branches:
+  #     - main
       
 
 jobs:
@@ -83,8 +83,6 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
 
 
-
-
       # - name: Set up Google Cloud SDK
       #   uses: google-github-actions/setup-gcloud@v1
       #   with:
@@ -95,10 +93,30 @@ jobs:
       #   run: |
       #     gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev
 
-      # - name: Build and push Docker image to Google Cloud Artifact Registry
-      #   run: |
-      #     docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPOSITORY_NAME }}/web-colour-app:${{ env.PAGE_COLOUR }} .
-      #     docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPOSITORY_NAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
+      - id: "auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
+
+      - name: "Docker auth"
+        run: |-
+          gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build and push Docker image to Google Cloud Artifact Registry
+        run: |
+          docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPOSITORY_NAME }}/web-colour-app:${{ env.PAGE_COLOUR }} .
+          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPOSITORY_NAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
+
+
+
+
+
 
 
 
