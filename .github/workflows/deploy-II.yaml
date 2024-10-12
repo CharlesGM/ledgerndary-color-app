@@ -5,8 +5,7 @@ on:
     branches:
       - main
 
-
-job:
+jobs:
   build-push-artifact:
     runs-on: ubuntu-latest
     steps:
@@ -14,9 +13,9 @@ job:
         uses: "actions/checkout@v3"
 
       - id: "auth"
-          uses: "google-github-actions/auth@v1"
-          with:
-            credentials_json: "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}"
 
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v1"
