@@ -29,7 +29,7 @@ jobs:
 
       - name: Build image
         run: docker build . --file DOCKERFILE_LOCATION --tag ${{ secrets.GCP_REPOSITORY_NAME }}
-        working-directory: WORKING_DIRECTORY
+        working-directory: color-app
 
       - name: Push image
         run: docker push ${{ secrets.GCP_REPOSITORY_NAME }}
