@@ -104,8 +104,6 @@ jobs:
 
 
 
-
-
       # - name: Clone the ledgerndary-color-app-terraform
       #   env:
       #     GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
