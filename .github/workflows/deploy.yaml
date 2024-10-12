@@ -109,12 +109,14 @@ jobs:
           gcloud auth configure-docker ${{ secrets.REGION }}-docker.pkg.dev --quiet
 
       - name: Build and push Docker image to Google Cloud Artifact Registry
+        # run: |
+        #   docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPOSITORY_NAME }}/colour-app:${{ env.PAGE_COLOUR }} .
+        #   docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPOSITORY_NAME }}/colour-app:${{ env.PAGE_COLOUR }}
+
+        
         run: |
-          docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPOSITORY_NAME }}/colour-app:${{ env.PAGE_COLOUR }} .
-          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_REPOSITORY_NAME }}/colour-app:${{ env.PAGE_COLOUR }}
-
-
-
+          docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/color-app/colour-app:${{ env.PAGE_COLOUR }} .
+          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/color-app/colour-app:${{ env.PAGE_COLOUR }}
 
 
 
