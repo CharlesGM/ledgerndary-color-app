@@ -99,8 +99,8 @@ jobs:
 
       - name: Build and push Docker image to Google Cloud Artifact Registry        
         run: |
-          docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/color-app:${{ env.PAGE_COLOUR }} .
-          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/color-app:${{ env.PAGE_COLOUR }}
+          docker build -t ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/color-app/color-app:${{ env.PAGE_COLOUR }} .
+          docker push ${{ secrets.REGION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/color-app/color-app:${{ env.PAGE_COLOUR }}
 
 
 
