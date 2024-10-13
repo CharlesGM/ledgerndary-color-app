@@ -80,7 +80,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/colour-app:${{ env.PAGE_COLOUR }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-colour-app:${{ env.PAGE_COLOUR }}
 
       - id: "auth"
         uses: "google-github-actions/auth@v1"
